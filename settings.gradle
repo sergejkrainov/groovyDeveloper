@@ -1,2 +1,3 @@
 rootProject.name = 'groovyDeveloper'
+include 'hw01-gradle'
 
