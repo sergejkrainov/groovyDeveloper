@@ -127,14 +127,6 @@ class ToDoList {
                     (it.isComplete() ? "YES" : "NO")
             ))
         }
-        /*taskList.stream()
-                .forEach(task -> println(String.format(displayFormat,
-                        taskList.indexOf(task) + 1,
-                        task.getTitle(),
-                        task.getProject(),
-                        task.getDueDate(),
-                        (task.isComplete() ? "YES" : "NO")
-                )));*/
     }
 
     /**
@@ -169,13 +161,6 @@ class ToDoList {
                         ))
                     }
 
-            /*taskList.stream()
-                    .sorted(Comparator.comparing(Task::getProject))
-                    .forEach(task -> println(String.format(displayFormat, task.getProject(),
-                            task.getTitle(),
-                            task.getDueDate(),
-                            (task.isComplete() ? "YES" : "NO")
-                    )));*/
         } else {
             def displayFormat = "%-10s %-35s %-20s %-10s";
 
@@ -195,13 +180,6 @@ class ToDoList {
                         ))
                     }
 
-            /*taskList.stream()
-                    .sorted(Comparator.comparing(Task::getDueDate))
-                    .forEach(task -> println(String.format(displayFormat, task.getDueDate(),
-                            task.getTitle(),
-                            task.getProject(),
-                            (task.isComplete() ? "YES" : "NO")
-                    )));*/
         }
     }
 
@@ -259,9 +237,6 @@ class ToDoList {
         return taskList.findAll {
             it -> it.isComplete()
         }.size()
-        /*return (int) taskList.stream()
-                .filter(Task::isComplete)
-                .count();*/
     }
 
     /**
