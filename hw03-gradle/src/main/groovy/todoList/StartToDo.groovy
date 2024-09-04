@@ -10,6 +10,7 @@ class StartToDo {
      * @param args array of String holding command line parameters
      */
     static void main(String[] args) {
+
         // An object of ToDoList to hold all tasks and their data
         ToDoList todoList = new ToDoList();
 
@@ -25,7 +26,7 @@ class StartToDo {
 
             Messages.showMessage("Welcome to ToDoList", false);
 
-            while (!menuChoice.equals("4")) {
+            while (!menuChoice.equals("10")) {
                 Messages.mainMenu(todoList.notCompletedCount(), todoList.completedCount());
                 menuChoice = input.nextLine();
 
@@ -35,16 +36,48 @@ class StartToDo {
                         todoList.listAllTasks(input.nextLine());
                         break;
                     case "2":
-                        todoList.readTaskFromUser();
+                        todoList.listAllTasksWithIndex();
+                        Messages.taskSelection()
+                        int taskNumber = Integer.parseInt(input.nextLine()) - 1;
+                        Messages.listAllActionsMenu();
+                        todoList.getTaskList()[taskNumber].listAllActions(input.nextLine())
                         break;
                     case "3":
-                        todoList.listAllTasksWithIndex();
-                        Messages.editTaskSelection();
-                        todoList.editTask(input.nextLine());
+                        todoList.readTaskFromUser();
                         break;
                     case "4":
+                        todoList.listAllTasksWithIndex();
+                        Messages.taskSelection()
+                        int taskNumber = Integer.parseInt(input.nextLine()) - 1;
+                        todoList.getTaskList()[taskNumber].readActionFromUser();
                         break;
-
+                    case "5":
+                        todoList.listAllTasksWithIndex();
+                        Messages.taskSelection()
+                        int taskNumber = Integer.parseInt(input.nextLine()) - 1;
+                        todoList.getTaskList()[taskNumber].listAllActionsWithIndex();
+                        Messages.editActionSelection()
+                        todoList.getTaskList()[taskNumber].editAction(input.nextLine());
+                        break;
+                    case "6":
+                        todoList.listAllTasksWithIndex();
+                        Messages.taskSelection()
+                        int taskNumber = Integer.parseInt(input.nextLine()) - 1;
+                        todoList.removeTask(taskNumber)
+                        break;
+                    case "7":
+                        Messages.showMessage("Input date to show tasks, for example: 2019-12-31", false)
+                        todoList.listAllTasksByDate(input.nextLine());
+                        break;
+                    case "8":
+                        Messages.showMessage("Count of all tasks is:${todoList.getTaskList().size()}", false)
+                        break;
+                    case "9":
+                        Messages.showMessage("Input date to show tasks, for example: 2019-12-31", false)
+                        todoList.showBusyTimeByDate(input.nextLine());
+                        break;
+                    case "10":
+                        break;
                     default:
                         Messages.unknownMessage();
                 }

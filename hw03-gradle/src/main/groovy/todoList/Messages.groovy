@@ -23,11 +23,17 @@ class Messages {
                 ${Messages.RESET_TEXT}  and  ${Messages.GREEN_TEXT}
                 ${completedTaskCount}  completed task(s) ${Messages.RESET_TEXT}
         Pick an option:
-        (1) Show Task List (by date or project)
-        (2) Add New Task
-        (3) Edit Task (update, mark as done, remove)
-        (4) Save and Quit
-        Please enter your choice [1-4]: """);
+        (1) Show All Task List (by date or title)
+        (2) Show All Actions in selected Task
+        (3) Add New Task
+        (4) Add New Action to Task
+        (5) Edit Action (update, mark as done, remove)
+        (6) Remove Task
+        (7) Show Task List by date
+        (8) Show count of Tasks
+        (9) Show busy-time of Task by date
+        (10) Save and Quit
+        Please enter your choice [1-10]: """);
     }
 
     /**
@@ -40,8 +46,40 @@ class Messages {
         Pick an option:
         (1) Show Task List by date
                 ${Messages.RED_TEXT}  [default choice, just press ENTER key]  ${Messages.RESET_TEXT}
-        (2) Show Task List by project
+        (2) Show Task List by title
         Please enter your choice [1-2]: """)
+    }
+
+    /**
+     * This method displays the menu to standard output (terminal) to show the options to display all actions
+     * for user selection
+     */
+    static void listAllActionsMenu() {
+        println("""      Display All Actions
+        ===================
+        Pick an option:
+        (1) Show Action List by Start Time
+                ${Messages.RED_TEXT}  [default choice, just press ENTER key]  ${Messages.RESET_TEXT}
+        (2) Show Task List by title
+        Please enter your choice [1-2]: """)
+    }
+
+    /**
+     * This method will display a prompt to user for typing the task number to EDIT
+     */
+    static void taskSelection() {
+        println(GREEN_TEXT);
+        print(">>> Type a task number and press ENTER key: ");
+        print(RESET_TEXT);
+    }
+
+    /**
+     * This method will display a prompt to user for typing the action number to EDIT
+     */
+    static void editActionSelection() {
+        println(GREEN_TEXT);
+        print(">>> Type a action number to EDIT and press ENTER key: ");
+        print(RESET_TEXT);
     }
 
     /**
@@ -62,8 +100,23 @@ class Messages {
         ======================
         Pick an option:
         (1) Modify selected task
-        (2) Mark selected task as COMPLETED
-        (3) Delete selected task")
+        (2) Delete selected task")
+        (3) Return to main menu 
+                 ${Messages.RED_TEXT}  [default choice, just press ENTER]  ${Messages.RESET_TEXT}
+        Please enter your choice [1-3]: """)
+    }
+
+    /**
+     * This method will display the Edit menu options on standard output (terminal)
+     * for user selection
+     */
+    public static void editActionMenu() {
+        println("""      Action Edit Options
+        ======================
+        Pick an option:
+        (1) Modify selected action
+        (2) Mark selected action as COMPLETED
+        (3) Delete selected action
         (4) Return to main menu 
                  ${Messages.RED_TEXT}  [default choice, just press ENTER]  ${Messages.RESET_TEXT}
         Please enter your choice [1-4]: """)
