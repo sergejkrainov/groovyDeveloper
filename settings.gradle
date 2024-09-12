@@ -2,4 +2,5 @@ rootProject.name = 'groovyDeveloper'
 include 'hw01-gradle'
 include 'hw02-gradle'
 include 'hw03-gradle'
+include 'hw04-gradle'
 
