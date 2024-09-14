@@ -57,7 +57,7 @@ static void main(String[] args) {
     def xmlPath = System.getProperty("user.dir") + "/../../../resources/xml/"
     file = new File(xmlPath + "test.xml")
     file.withWriter("UTF-8") {writer ->
-        writer << htmlStr
+        writer << xmlStr
     }
 
 
