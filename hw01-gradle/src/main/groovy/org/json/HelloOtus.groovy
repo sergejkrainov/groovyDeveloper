@@ -1,4 +1,4 @@
-package org.example
+package org.json
 
 import static com.google.common.base.Strings.*
 

@@ -3,4 +3,5 @@ include 'hw01-gradle'
 include 'hw02-gradle'
 include 'hw03-gradle'
 include 'hw04-gradle'
+include 'hw05-gradle'
 
