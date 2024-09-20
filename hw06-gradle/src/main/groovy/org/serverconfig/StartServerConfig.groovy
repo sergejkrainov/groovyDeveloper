@@ -11,23 +11,47 @@ class StartServerConfig {
         conf.setScriptBaseClass("org.serverconfig.ScriptRun")
         //binding.setProperty('name', 'Petr')
         def shell = new GroovyShell(binding, conf)
-        shell.evaluate(new File('./parent_config.conf'))
+        def prntConfPth = System.getProperty("user.dir") +
+                "/hw06-gradle/src/main/" +  "resources/config/parent_config.conf"
+        shell.evaluate(new File(prntConfPth))
         /*println(ServerConfigBuilder.build{
         name = "MyTest"
         description = "Apache Tomcat"*/
-        Script scr = shell.parse(new File("./parent_config.conf"))
-        def result = scr.run()
 
-        ServerConfig srConf = new ServerConfig();
         Binding bnd = shell.getContext()
 
-        def clArr = bnd.getProperty("mappings")
-        def cl = clArr.getAt(0)
-        def resultCl = cl.call()
-        srConf.setProperty("name", bnd.getProperty("name"))
-        srConf.setProperty("description", bnd.getProperty("description"))
-        srConf.setProperty("mappings", bnd.getProperty("mappings"))
-        println(srConf)
+        ArrayList<Closure> clArr = bnd.getProperty("mappings")
+        setMappings(clArr)
+        ServerConfig.getInstance().setProperty("name", bnd.getProperty("name"))
+        ServerConfig.getInstance().setProperty("description", bnd.getProperty("description"))
+
+        def confPth = System.getProperty("user.dir") +
+                "/hw06-gradle/src/main/" +  "resources/config/config.conf"
+        shell.evaluate(new File(confPth))
+        bnd = shell.getContext()
+        clArr = bnd.getProperty("mappings")
+        setMappings(clArr)
+
+        def confStendPth = System.getProperty("user.dir") +
+                "/hw06-gradle/src/main/" +  "resources/config/" + ServerConfig.getInstance().path
+        shell.evaluate(new File(confStendPth))
+
+
+        ServerConfig srvConf = ServerConfig.getInstance()
+        srvConf.toString()
+    }
+
+    static void setMappings(List clArr){
+        if(ServerConfig.getInstance().getMappings().size() > 1) {
+            ServerConfig.getInstance().getMappings().clear()
+        }
+        for(Closure cl in clArr) {
+            ServerProps srvPops = new ServerProps()
+            cl.resolveStrategy = Closure.DELEGATE_FIRST
+            cl.delegate = srvPops
+            cl.call()
+            ServerConfig.getInstance().getMappings().add(srvPops)
+        }
     }
 
 
