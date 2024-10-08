@@ -1,0 +1,46 @@
+plugins {
+    id 'groovy'
+    id 'groovy-gradle-plugin'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    gradlePluginPortal()
+}
+
+dependencies {
+    implementation 'com.helger:jcodemodel:3.4.0'
+    implementation 'org.apache.groovy:groovy:4.0.14'
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.register("hello") {
+    doLast {
+        println("Hello, world!")
+    }
+}
+
+
+gradlePlugin {
+    plugins {
+        greetPlugin {
+            id = "greeting"
+            implementationClass = 'GreetingPlugin'
+        }
+        licensePlugin {
+            id = "license"
+            implementationClass = 'LicensePlugin'
+        }
+        generateSourcePlugin {
+            id = "generateSource"
+            implementationClass = 'GenerateSourcePlugin'
+        }
+    }
+}

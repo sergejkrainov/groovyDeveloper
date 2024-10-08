@@ -4,16 +4,29 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/hw01-gradle" />
             <option value="$PROJECT_DIR$/hw02-gradle" />
             <option value="$PROJECT_DIR$/hw03-gradle" />
             <option value="$PROJECT_DIR$/hw04-gradle" />
             <option value="$PROJECT_DIR$/hw05-gradle" />
             <option value="$PROJECT_DIR$/hw06-gradle" />
+            <option value="$PROJECT_DIR$/hw07-gradle" />
           </set>
         </option>
       </GradleProjectSettings>
