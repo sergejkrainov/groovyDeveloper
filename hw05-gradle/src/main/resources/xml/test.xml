@@ -1,0 +1,10 @@
+<employee>
+  <name>Пупкин Морква Свеклович</name>
+  <age>22</age>
+  <secretIdentity>322-223</secretIdentity>
+  <powers>
+    <power>100</power>
+    <power>50</power>
+    <power>70</power>
+  </powers>
+</employee>

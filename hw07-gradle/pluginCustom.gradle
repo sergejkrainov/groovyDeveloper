@@ -1,0 +1,17 @@
+class GreetingPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        project.tasks.register("greet", GreetingTask.class)
+    }
+}
+
+abstract class GreetingTask extends DefaultTask {
+
+    @TaskAction
+    void action() {
+        println("Hello!!!!!!")
+    }
+}
+
+apply plugin: GreetingPlugin.class
