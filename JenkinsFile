@@ -1,0 +1,118 @@
+import java.text.SimpleDateFormat
+
+def buildModuleByModuleName(def moduleName, def groovyBin){
+    printcurrentTime(moduleName)
+    def gradleCommand = "${groovyBin} clean build -p " + moduleName
+    stdout = bat(returnStdout: true, script: gradleCommand + " || true")
+    echo "${stdout}"
+}
+
+def printcurrentTime(def moduleName) {
+    def date = new Date();
+    def sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+    println("Starting module ${moduleName} on branch ${params.BRANCH} in time:" + sdf.format(date))
+}
+
+def buildImage(def moduleName, def dockerBin) {
+    dir(env.WORKSPACE + "/${moduleName}") {
+        gradleCommand = "${dockerBin} image build -t app_${moduleName} ."
+        stdout = bat(returnStdout: true, script: gradleCommand + " || true")
+        echo "${stdout}"
+    }
+}
+
+@NonCPS
+def getCountFiles(String path){
+    int count = 0;
+    new File(path).eachFileRecurse { file ->
+                    if(!file.isDirectory()) {
+                       count++
+                    }
+                  // println("File name  =" + file.getName())
+                }
+    return count;
+}
+
+
+node('agent') {
+
+    properties([
+        parameters([
+            string(defaultValue: 'homework-7', name: 'BRANCH')
+            ])
+    ])
+
+    stage("download Script from SCV") {
+
+        echo "Начинается загрузка репозитория https://github.com/sergejkrainov/groovyDeveloper.git из ветки ${params.BRANCH}"
+        git changelog: false,
+            poll: false,
+
+            branch: "${params.BRANCH}",
+
+            url: "https://github.com/sergejkrainov/groovyDeveloper.git"
+
+        echo "Загружен репозиторий завершена"
+    }
+
+    stage("Run main script") {
+
+        echo "Run main script"
+
+        def gradleTool = tool('Gradle 8.10.2')
+
+        def jdkTool
+
+        def groovyBin = "${gradleTool}/bin/gradle"
+        def dockerBin = "C:\\Program Files\\Docker Toolbox\\docker"
+
+        jdkTool = tool('jdk17')
+
+        def modules = ["hw01-gradle", "hw02-gradle", "hw03-gradle", "hw04-gradle", "hw05-gradle", "hw06-gradle", "hw07-gradle"]
+
+        withEnv(["JAVA_HOME=${jdkTool}", "PATH+gradleHome=${tool 'Gradle 8.10.2'}/bin"]) {
+
+
+            parallel module1: {
+
+                buildModuleByModuleName(modules[0], groovyBin)
+                buildImage(modules[0], dockerBin)
+            }, module2: {
+
+                buildModuleByModuleName(modules[1], groovyBin)
+                buildImage(modules[1], dockerBin)
+            }, module3: {
+
+                buildModuleByModuleName(modules[2], groovyBin)
+                buildImage(modules[2], dockerBin)
+            }, module4: {
+
+                buildModuleByModuleName(modules[3], groovyBin)
+                buildImage(modules[3], dockerBin)
+            }, module5: {
+
+                buildModuleByModuleName(modules[4], groovyBin)
+                buildImage(modules[4], dockerBin)
+            }
+
+            modules.each{
+                println("Count files of module ${it} is " + getCountFiles(env.WORKSPACE + "/${it}"))
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
