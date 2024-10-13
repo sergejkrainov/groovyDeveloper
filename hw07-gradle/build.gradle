@@ -36,6 +36,10 @@ generateSource {
     rootPath = "GeneratedSources/MyNewCode"
 }
 
+project.tasks.withType(JavaCompile).configureEach {
+    dependsOn generateSource
+}
+
 /*greet {
 
 }*/
