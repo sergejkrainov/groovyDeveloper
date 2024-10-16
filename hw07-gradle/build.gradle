@@ -37,7 +37,7 @@ generateSource {
 }
 
 project.tasks.withType(JavaCompile).configureEach {
-    dependsOn generateSource
+    dependsOn 'generateSource'
 }
 
 /*greet {
