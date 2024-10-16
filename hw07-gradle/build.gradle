@@ -33,7 +33,11 @@ generateSource {
     fieldName = "myGoodFieldName"
     fieldValue = "myGoodFieldValue"
     packageName = "myGoodPackageName"
-    rootPath = "GeneratedSources/MyNewCode"
+    rootPath = "generatedSources/mynewcode"
+}
+
+project.tasks.withType(JavaCompile).configureEach {
+    dependsOn 'generateSource'
 }
 
 /*greet {

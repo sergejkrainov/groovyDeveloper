@@ -34,7 +34,7 @@ abstract class GenerateSourceTask extends DefaultTask {
         m.body()._return(JExpr.lit(5));*/
         JFieldVar f = dc.field(0, String.class, fieldName.get(), JExpr.lit(fieldValue.get()))
 
-        File file = new File(project.rootDir.toString() + "/${rootPath.get()}");
+        File file = new File(project.rootDir.toString() + "/hw07-gradle/src/main/groovy/org/example/${rootPath.get()}");
         if(!file.exists()) {
             file.mkdirs()
         }
