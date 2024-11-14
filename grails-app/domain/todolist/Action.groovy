@@ -1,5 +1,10 @@
 package todolist
 
+import grails.rest.Resource
+import groovy.transform.ToString
+
+@ToString
+@Resource(uri = "/action")
 class Action {
 
     String title;

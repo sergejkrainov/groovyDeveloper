@@ -1,5 +1,6 @@
 package todolist
 
+import grails.rest.RestfulController
 import grails.validation.ValidationException
 
 import java.time.LocalDate
@@ -8,14 +9,16 @@ import java.time.format.DateTimeFormatter
 
 import static org.springframework.http.HttpStatus.*
 
-class TaskController {
+class TaskController extends RestfulController{
 
     int index = 1
     TaskService taskService
 
     static ArrayList<TaskModel> taskList = new ArrayList<TaskModel>()
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    TaskController(Class resource) {
+        super(resource)
+    }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

@@ -1,5 +1,10 @@
 package todolist
 
+import grails.rest.Resource
+import groovy.transform.ToString
+
+@ToString
+@Resource(uri = "/task")
 class Task {
 
 
@@ -9,7 +14,9 @@ class Task {
     String endTime;
     String dueDate;
     boolean isCorrect
+    static hasMany = [actionList: Action]
     List<Action> actionList
+
 
     static constraints = {
 
@@ -21,5 +28,4 @@ class Task {
 
     }
 
-    static hasMany = Action
 }

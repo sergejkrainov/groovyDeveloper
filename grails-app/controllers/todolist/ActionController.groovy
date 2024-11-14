@@ -1,19 +1,26 @@
 package todolist
 
+import grails.artefact.Artefact
+import grails.rest.RestfulController
 import grails.validation.ValidationException
+import io.micronaut.http.annotation.Get
 
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 import static org.springframework.http.HttpStatus.*
+import grails.rest.*
+import grails.converters.*
 
-class ActionController {
+class ActionController extends RestfulController{
 
     ActionService actionService
     TaskService taskService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    ActionController(Class resource) {
+        super(resource)
+    }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
