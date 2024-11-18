@@ -35,28 +35,29 @@ class ActionController {
         }
 
         try {
-            Task tsk = taskService.get(action.getIndexOfTask())
-            List<Action> lst = tsk.getActionList()
-            lst.add(action)
-            tsk.setActionList(lst)
-            TaskModel tskMod = TaskController.taskList.get(action.getIndexOfTask() - 1)
+            //Task tsk = taskService.get(action.getIndexOfTask())
+            Task tsk = Task.findByIndex(action.getIndexOfTask())
+            //TaskModel tskMod = TaskController.taskList.get(action.getIndexOfTask() - 1)
             def formatTime = "HH:mm"
             DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
             LocalTime startTime = LocalTime.parse(action.getStartTime(), dtFrm)
             LocalTime endTime = LocalTime.parse(action.getEndTime(), dtFrm)
-            if(!tskMod.checkActionForInputInTimeTaskInterval(startTime, endTime)){
+            if(!this.checkActionForInputInTimeTaskInterval(action.getStartTime(), action.getEndTime(), tsk)){
                 action.setIsCorrect(false)
-            }else if(tskMod.actionList.size() > 0) {
-                if (!tskMod.checkActionForInputTimeInterval(startTime, endTime, null)) {
+            }else if(tsk.getActionList().size() > 0) {
+                if (!this.checkActionForInputTimeInterval(action.getStartTime(), action.getEndTime(),  tsk)) {
                     action.setIsCorrect(false)
                 } else {
-                    tskMod.actionList << new ActionModel(action.getTitle(), startTime, endTime)
+                    //tskMod.actionList << new ActionModel(action.getTitle(), action.getStartTime(), action.getEndTime())
                     action.setIsCorrect(true)
                 }
             } else {
-                tskMod.actionList << new ActionModel(action.getTitle(), startTime, endTime)
+                //tskMod.actionList << new ActionModel(action.getTitle(), action.getStartTime(), action.getEndTime())
                 action.setIsCorrect(true)
             }
+            List<Action> lst = tsk.getActionList()
+            lst.add(action)
+            tsk.setActionList(lst)
             taskService.save(tsk)
             actionService.save(action)
         } catch (ValidationException e) {
@@ -124,5 +125,49 @@ class ActionController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    boolean checkActionForInputInTimeTaskInterval(String startTimeStr, String endTimeStr, Task task) {
+
+        def formatTime = "HH:mm"
+        DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
+        LocalTime startTime = LocalTime.parse(startTimeStr, dtFrm)
+        LocalTime endTime = LocalTime.parse(endTimeStr, dtFrm)
+
+        boolean correctTimes = false
+        boolean isIntervalBeforeEndTask = endTime.isBefore(LocalTime.parse(task.getEndTime(), dtFrm)) || endTime.equals(LocalTime.parse(task.getEndTime(), dtFrm))
+        boolean isIntervalAfterStartTask = startTime.isAfter(LocalTime.parse(task.getStartTime(), dtFrm)) || startTime.equals(LocalTime.parse(task.getStartTime(), dtFrm))
+        if(isIntervalBeforeEndTask && isIntervalAfterStartTask){
+            correctTimes = true
+        } else{
+            correctTimes = false
+            return correctTimes
+        }
+        return correctTimes;
+    }
+
+    boolean checkActionForInputTimeInterval(String startTimeStr, String endTimeStr, Task tsk) {
+        def formatTime = "HH:mm"
+        DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
+        LocalTime startTime = LocalTime.parse(startTimeStr, dtFrm)
+        LocalTime endTime = LocalTime.parse(endTimeStr, dtFrm)
+        def result = Person.withCriteria {
+            if(false) order("salary", "desc")
+            if(true) like("name", "%i%")
+        }
+        boolean correctTimes = false
+        tsk.getActionList()
+                .sort(Action::getStartTime)
+                .each{
+                        boolean isIntervalBefore = endTime.isBefore(LocalTime.parse(it.getStartTime(), dtFrm))
+                        boolean isIntervalAfter = startTime.isAfter(LocalTime.parse(it.getEndTime(), dtFrm))
+                        if (isIntervalBefore || isIntervalAfter) {
+                            correctTimes = true
+                        } else {
+                            correctTimes = false
+                            return correctTimes
+                        }
+                }
+        return correctTimes;
     }
 }

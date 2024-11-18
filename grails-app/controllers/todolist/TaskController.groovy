@@ -13,7 +13,7 @@ class TaskController {
     int index = 1
     TaskService taskService
 
-    static ArrayList<TaskModel> taskList = new ArrayList<TaskModel>()
+    //static ArrayList<TaskModel> taskList = new ArrayList<TaskModel>()
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -43,10 +43,16 @@ class TaskController {
             DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
             LocalTime startTime = LocalTime.parse(task.getStartTime(), dtFrm)
             LocalTime endTime = LocalTime.parse(task.getEndTime(), dtFrm)
-            if(!this.checkTaskForInputTimeInterval(dueDate, startTime, endTime)){
+            /*if(!this.checkTaskForInputTimeInterval(dueDate, startTime, endTime)){
                 task.setIsCorrect(false)
             } else {
                 taskList << new TaskModel(task.getTitle(), dueDate, startTime, endTime)
+                task.setIsCorrect(true)
+            }*/
+            if(!this.checkTaskForInputTimeInterval(task.getDueDate(), task.getStartTime(), task.getEndTime())){
+                task.setIsCorrect(false)
+            } else {
+                //taskList << new TaskModel(task.getTitle(), dueDate, startTime, endTime)
                 task.setIsCorrect(true)
             }
             task.setIndex(index)
@@ -119,7 +125,7 @@ class TaskController {
         }
     }
 
-    boolean checkTaskForInputTimeInterval(LocalDate dueDate, LocalTime startTime, LocalTime endTime) {
+    /*boolean checkTaskForInputTimeInterval(LocalDate dueDate, LocalTime startTime, LocalTime endTime) {
 
         boolean correctTimes = false
         def searchtaskList = this.taskList
@@ -140,5 +146,28 @@ class TaskController {
                     }
         }
         return correctTimes;
+    }*/
+
+    boolean checkTaskForInputTimeInterval(String dueDate, String startTime, String endTime) {
+
+        def formatTime = "HH:mm"
+        DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
+        boolean correctTimes = false
+        def searchtaskList = Task.findAllByDueDate(dueDate)
+        if(searchtaskList.size() == 0){
+            correctTimes = true
+        } else {
+            searchtaskList
+                    .sort(Task::getStartTime)
+                    .each{
+                        boolean isIntervalBefore = LocalTime.parse(endTime, dtFrm).isBefore(LocalTime.parse(it.getStartTime(), dtFrm))
+                        boolean isIntervalAfter = LocalTime.parse(startTime, dtFrm).isAfter(LocalTime.parse(it.getEndTime(), dtFrm))
+                        if(isIntervalBefore || isIntervalAfter){
+                            correctTimes = true
+                        }
+                    }
+        }
+        return correctTimes;
     }
+
 }
