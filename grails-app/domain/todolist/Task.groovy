@@ -8,8 +8,15 @@ class Task {
     String startTime;
     String endTime;
     String dueDate;
+
+    Long countOfTasksByDate
+
+    int busyTime
+
     boolean isCorrect
     List<Action> actionList
+
+    List<Task> taskListByDate
 
     static constraints = {
 

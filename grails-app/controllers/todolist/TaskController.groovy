@@ -23,6 +23,14 @@ class TaskController {
     }
 
     def show(Long id) {
+
+        def count = Task.executeQuery(
+                "select count(tsk.id) from Task tsk where tsk.dueDate = ?0", ['2024-11-18'])
+        taskService.get(id).setCountOfTasksByDate(count.get(0))
+
+        List<Task> tskList = Task.findAllByDueDate("2024-11-18")
+        taskService.get(id).setTaskListByDate(tskList)
+
         respond taskService.get(id)
     }
 
