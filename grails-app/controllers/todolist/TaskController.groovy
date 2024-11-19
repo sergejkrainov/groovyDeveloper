@@ -31,6 +31,11 @@ class TaskController {
         List<Task> tskList = Task.findAllByDueDate("2024-11-18")
         taskService.get(id).setTaskListByDate(tskList)
 
+        if(taskService.get(id).getActionList().size() > 0) {
+            taskService.get(id).setBusyTime(getBusyTimeByDate("2024-11-18"))
+        }
+
+
         respond taskService.get(id)
     }
 
@@ -133,29 +138,6 @@ class TaskController {
         }
     }
 
-    /*boolean checkTaskForInputTimeInterval(LocalDate dueDate, LocalTime startTime, LocalTime endTime) {
-
-        boolean correctTimes = false
-        def searchtaskList = this.taskList
-                .findAll {
-                    it.getDueDate().equals(dueDate)
-                }
-        if(searchtaskList.size() == 0){
-            correctTimes = true
-        } else {
-            searchtaskList
-                    .sort(Task::getStartTime)
-                    .each{
-                        boolean isIntervalBefore = endTime.isBefore(it.getStartTime())
-                        boolean isIntervalAfter = startTime.isAfter(it.getEndTime())
-                        if(isIntervalBefore || isIntervalAfter){
-                            correctTimes = true
-                        }
-                    }
-        }
-        return correctTimes;
-    }*/
-
     boolean checkTaskForInputTimeInterval(String dueDate, String startTime, String endTime) {
 
         def formatTime = "HH:mm"
@@ -176,6 +158,36 @@ class TaskController {
                     }
         }
         return correctTimes;
+    }
+
+    int getBusyTimeByDate(String dueDate) {
+
+        LocalDate dueDateToSearch
+        if (!(dueDate.trim().equals("") || dueDate == null)) {
+            dueDateToSearch = LocalDate.parse(dueDate);
+        }
+
+        def formatTime = "HH:mm"
+        DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
+        LocalTime.parse(action.getStartTime(), dtFrm)
+
+        List<Task> taskListFound = Task.findAllByDueDate("2024-11-18")
+        int busyTime = 0;
+        if (taskListFound.size() > 0) {
+            taskListFound.sort(Task::getStartTime)
+                    .each {
+                        it.getActionList()
+                                .each{
+                                    busyTime += ((LocalTime.parse(it.getEndTime(), dtFrm).hour * 60 + LocalTime.parse(it.getEndTime(), dtFrm).minute)
+                                            - (LocalTime.parse(it.getStartTime(), dtFrm).hour * 60 + LocalTime.parse(it.getStartTime(), dtFrm).minute))
+                                }
+
+
+                    }
+        }
+
+        return busyTime
+
     }
 
 }
