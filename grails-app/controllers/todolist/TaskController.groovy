@@ -25,6 +25,11 @@ class TaskController extends RestfulController{
         respond taskService.list(params), model:[taskCount: taskService.count()]
     }
 
+    def indexMy(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond taskService.list(params), model:[taskCount: taskService.count()]
+    }
+
     def show(Long id) {
         respond taskService.get(id)
     }
