@@ -169,7 +169,6 @@ class TaskController {
 
         def formatTime = "HH:mm"
         DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
-        LocalTime.parse(action.getStartTime(), dtFrm)
 
         List<Task> taskListFound = Task.findAllByDueDate("2024-11-18")
         int busyTime = 0;

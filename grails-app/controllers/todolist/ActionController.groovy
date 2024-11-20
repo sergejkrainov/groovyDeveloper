@@ -151,10 +151,6 @@ class ActionController {
         DateTimeFormatter dtFrm = DateTimeFormatter.ofPattern(formatTime)
         LocalTime startTime = LocalTime.parse(startTimeStr, dtFrm)
         LocalTime endTime = LocalTime.parse(endTimeStr, dtFrm)
-        def result = Person.withCriteria {
-            if(false) order("salary", "desc")
-            if(true) like("name", "%i%")
-        }
         boolean correctTimes = false
         tsk.getActionList()
                 .sort(Action::getStartTime)
