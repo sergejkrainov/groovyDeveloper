@@ -1,4 +1,4 @@
-package org.spock.negative
+package org.spock.positive
 
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper

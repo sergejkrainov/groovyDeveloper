@@ -1,4 +1,4 @@
-package org.spock.negative
+package org.spock.positive
 
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
@@ -8,7 +8,7 @@ import io.restassured.response.Response
 import spock.lang.Specification
 
 @Log
-class SmokeGetAction extends Specification{
+class SmokeDeleteAction extends Specification{
 
     static Map<String, String> headersMap = new HashMap<>()
 
@@ -19,23 +19,25 @@ class SmokeGetAction extends Specification{
     }
 
 
-    def "get action by Id"() {
+    def "delete action"() {
         given:
 
         when:
         Response response =
-                RestAssured.get("/actions/1")
+                RestAssured.delete("/actions/4")
 
         String responseStr = response.asString()
         log.info("Response is:" + responseStr)
+
+
+        response =
+                RestAssured.get("/actions")
+        responseStr = response.asString()
         def jsnBld = new JsonBuilder(new JsonSlurper().parseText(responseStr))
 
         then:
-        String.valueOf(jsnBld.getContent().get("id")) == "1"
-        jsnBld.getContent().get("title") == "action1"
-        jsnBld.getContent().get("startTime") == "07:00"
-        jsnBld.getContent().get("endTime") == "10:00"
-        String.valueOf(jsnBld.getContent().get("indexOfTask")) == "1"
+        jsnBld.getContent().size() == 3
+
     }
 
 
