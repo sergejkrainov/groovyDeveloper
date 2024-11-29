@@ -24,8 +24,8 @@ class SmokeEditAction extends Specification{
             {
               "id": 1,
               "title": "action1Edited",
-              "startTime": "07:30",
-              "endTime": "10:30",
+              "startTime": "20:30",
+              "endTime": "21:30",
               "indexOfTask": 1
             }
         """
