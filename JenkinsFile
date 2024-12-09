@@ -34,7 +34,7 @@ def getCountFiles(String path){
 }
 
 
-node('agent') {
+node() {
 
     properties([
         parameters([
