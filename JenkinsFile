@@ -13,9 +13,17 @@ def printcurrentTime(def moduleName) {
     println("Starting module ${moduleName} on branch ${params.BRANCH} in time:" + sdf.format(date))
 }
 
-def buildImage(def moduleName, def dockerBin) {
+def buildImage(def imageName, def dockerBin) {
     dir(env.WORKSPACE) {
-        gradleCommand = "${dockerBin} image build -t app_${moduleName} ."
+        gradleCommand = "docker build -t ${imageName} ."
+        stdout = bat(returnStdout: true, script: gradleCommand + " || true")
+        echo "${stdout}"
+    }
+}
+
+def startDocker(def imageName, def dockerBin) {
+    dir(env.WORKSPACE) {
+        gradleCommand = "docker run -p 8090:8090 ${imageName}"
         stdout = bat(returnStdout: true, script: gradleCommand + " || true")
         echo "${stdout}"
     }
@@ -72,11 +80,9 @@ node() {
 
 
             buildModule(groovyBin)
-            //buildImage("springToDoList", dockerBin)
-
+            buildImage("jre-todolist-image", dockerBin)
             println("Count files of module springToDoList is " + getCountFiles(env.WORKSPACE))
-
-
+            startDocker("jre-todolist-image", dockerBin)
         }
 
     }

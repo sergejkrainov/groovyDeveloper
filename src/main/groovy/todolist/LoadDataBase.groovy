@@ -1,12 +1,11 @@
 package todolist
 
-import groovy.util.logging.Log
+
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@Log
 class LoadDataBase {
 
     //private static final Logger log = LoggerFactory.getLogger(LoadDataBase.class);
@@ -40,8 +39,8 @@ class LoadDataBase {
             //task1.setActionList(actList1)
             //task2.getActionList(actList2)
 
-            log.info("Preloading " + taskRepository.save(task1));
-            log.info("Preloading " + taskRepository.save(task2));
+            println("Preloading " + taskRepository.save(task1));
+            println("Preloading " + taskRepository.save(task2));
         }
     }
 
