@@ -59,7 +59,7 @@ node('agent') {
 
         echo "Run main script"
 
-        def gradleTool = tool('Gradle 8.10.2')
+        def gradleTool = tool('Gradle 8.11.1')
 
         def jdkTool
 
@@ -68,11 +68,11 @@ node('agent') {
 
         jdkTool = tool('jdk17')
 
-        withEnv(["JAVA_HOME=${jdkTool}", "PATH+gradleHome=${tool 'Gradle 8.10.2'}/bin"]) {
+        withEnv(["JAVA_HOME=${jdkTool}", "PATH+gradleHome=${tool 'Gradle 8.11.1'}/bin"]) {
 
 
             buildModuleByModuleName(groovyBin)
-            buildImage("springToDoList", dockerBin)
+            //buildImage("springToDoList", dockerBin)
 
             println("Count files of module springToDoList is " + getCountFiles(env.WORKSPACE))
 
