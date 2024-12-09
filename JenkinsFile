@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat
 
 def buildModule(def groovyBin){
     printcurrentTime("springToDoList")
-    def gradleCommand = "${groovyBin} clean build "
+    def gradleCommand = "${groovyBin} clean"
     stdout = bat(returnStdout: true, script: gradleCommand + " || true")
     echo "${stdout}"
 }
