@@ -71,7 +71,7 @@ node('agent') {
         withEnv(["JAVA_HOME=${jdkTool}", "PATH+gradleHome=${tool 'Gradle 8.11.1'}/bin"]) {
 
 
-            buildModuleByModuleName(groovyBin)
+            buildModule(groovyBin)
             //buildImage("springToDoList", dockerBin)
 
             println("Count files of module springToDoList is " + getCountFiles(env.WORKSPACE))
