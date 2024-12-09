@@ -2,7 +2,7 @@ package todolist
 
 class ActionNotFoundException extends RuntimeException {
 
-    ActionNotFoundException(Long id) {
+    ActionNotFoundException(def id) {
         super("Could not find action " + id);
     }
 }

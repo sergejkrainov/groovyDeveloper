@@ -2,7 +2,7 @@ package todolist
 
 class DateFieldException extends RuntimeException {
 
-    DateFieldException(String format, String value) {
+    DateFieldException(def format, def value) {
         super("value  " + value + " not of format " + format);
     }
 }

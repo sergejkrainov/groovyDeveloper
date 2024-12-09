@@ -1,14 +1,12 @@
 package todolist
 
-import groovy.util.logging.Slf4j
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import groovy.util.logging.Log
+import org.springframework.boot.CommandLineRunner
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
 @Configuration
-@Slf4j
+@Log
 class LoadDataBase {
 
     //private static final Logger log = LoggerFactory.getLogger(LoadDataBase.class);
@@ -18,9 +16,9 @@ class LoadDataBase {
 
         return (args) -> {
 
-            /*Task task1 = new Task("task1", "2024-11-21","06:00", "22:00" )
+            Task task1 = new Task("task1", "2024-11-21", "06:00", "22:00")
             taskRepository.save(task1)
-            Task task2 = new Task("task2","2024-11-22", "07:00", "22:00" )
+            Task task2 = new Task("task2", "2024-11-22", "07:00", "22:00")
             taskRepository.save(task2)
 
             Action act1 = new Action("action1", "10:00", "15:00", 1)
@@ -42,11 +40,9 @@ class LoadDataBase {
             //task1.setActionList(actList1)
             //task2.getActionList(actList2)
 
-            println("Preloading " + taskRepository.save(task1));
-            println("Preloading " + taskRepository.save(task2));*/
-
-
-        };
+            log.info("Preloading " + taskRepository.save(task1));
+            log.info("Preloading " + taskRepository.save(task2));
+        }
     }
 
 }

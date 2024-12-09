@@ -10,7 +10,7 @@ class ActionNotFoundAdvice {
 
     @ExceptionHandler(ActionNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String actionNotFoundHandler(ActionNotFoundException ex) {
+    def actionNotFoundHandler(ActionNotFoundException ex) {
         return ex.getMessage();
     }
 }

@@ -2,7 +2,7 @@ package todolist
 
 class TimeFieldException extends RuntimeException {
 
-    TimeFieldException(String format, String value) {
+    TimeFieldException(def format, def value) {
         super("value  " + value + " not of format " + format);
     }
 }

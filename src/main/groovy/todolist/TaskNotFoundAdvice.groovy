@@ -10,7 +10,7 @@ class TaskNotFoundAdvice {
 
     @ExceptionHandler(TaskNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String taskNotFoundHandler(TaskNotFoundException ex) {
+    def taskNotFoundHandler(TaskNotFoundException ex) {
         return ex.getMessage();
     }
 }

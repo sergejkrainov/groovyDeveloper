@@ -10,7 +10,7 @@ class TimeFieldAdvice {
 
     @ExceptionHandler(TimeFieldException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String taskNotFoundHandler(TimeFieldException ex) {
+    def taskNotFoundHandler(TimeFieldException ex) {
         return ex.getMessage();
     }
 }

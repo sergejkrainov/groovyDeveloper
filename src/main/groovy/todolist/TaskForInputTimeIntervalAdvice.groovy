@@ -10,7 +10,7 @@ class TaskForInputTimeIntervalAdvice {
 
     @ExceptionHandler(TaskForInputTimeIntervalException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String taskNotFoundHandler(TaskForInputTimeIntervalException ex) {
+    def taskNotFoundHandler(TaskForInputTimeIntervalException ex) {
         return ex.getMessage();
     }
 }
