@@ -59,7 +59,7 @@ node() {
 
         echo "Run main script"
 
-        def gradleTool = tool('Gradle 8.11.1')
+        def gradleTool = tool('Gradle 8.10.2')
 
         def jdkTool
 
@@ -68,7 +68,7 @@ node() {
 
         jdkTool = tool('jdk17')
 
-        withEnv(["JAVA_HOME=${jdkTool}", "PATH+gradleHome=${tool 'Gradle 8.11.1'}/bin"]) {
+        withEnv(["JAVA_HOME=${jdkTool}", "PATH+gradleHome=${tool 'Gradle 8.10.2'}/bin"]) {
 
 
             buildModule(groovyBin)
