@@ -15,7 +15,7 @@ class LoadDataBase {
 
         return (args) -> {
 
-            Task task1 = new Task("task1", "2024-11-21", "06:00", "22:00")
+            /*Task task1 = new Task("task1", "2024-11-21", "06:00", "22:00")
             taskRepository.save(task1)
             Task task2 = new Task("task2", "2024-11-22", "07:00", "22:00")
             taskRepository.save(task2)
@@ -40,7 +40,7 @@ class LoadDataBase {
             //task2.getActionList(actList2)
 
             println("Preloading " + taskRepository.save(task1));
-            println("Preloading " + taskRepository.save(task2));
+            println("Preloading " + taskRepository.save(task2));*/
         }
     }
 
